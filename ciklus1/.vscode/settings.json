@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "matrix_clip_space.hpp": "c",
+        "scalar_constants.hpp": "c",
+        "random": "cpp",
+        "limits": "cpp"
+    }
+}
