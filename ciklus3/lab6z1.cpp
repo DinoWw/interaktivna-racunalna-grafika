@@ -190,28 +190,6 @@ int main(int argc, char ** argv)
 		verts[v+2] = (verts[v+2] - movez - vmin[2] ) * scalez;
 	}
 
-
-
-
-	// CALCULATE A, B, C and D
-
-	A = (GLdouble*) malloc(faceCount * sizeof(GLdouble));
-	B = (GLdouble*) malloc(faceCount * sizeof(GLdouble));
-	C = (GLdouble*) malloc(faceCount * sizeof(GLdouble));
-	D = (GLdouble*) malloc(faceCount * sizeof(GLdouble));
-
-	for(int i = 0; i < faceCount; i++) {
-		GLdouble *p1 = faces[3 * i + 0];
-		GLdouble *p2 = faces[3 * i + 1];
-		GLdouble *p3 = faces[3 * i + 2];
-
-		A[i] =   (p2[1]-p1[1]) * (p3[2]-p1[2]) - (p2[2]-p1[2]) * (p3[1]-p1[1]);
-		B[i] = - (p2[0]-p1[0]) * (p3[2]-p1[2]) + (p2[2]-p1[2]) * (p3[0]-p1[0]);
-		C[i] =   (p2[0]-p1[0]) * (p3[1]-p1[1]) - (p2[1]-p1[1]) * (p3[0]-p1[0]);
-		D[i] = - p1[0] * A[i] - p1[1] * B[i] - p1[2] * C[i];
-
-	}
-
 	// INITIALIZE GLUT ENVIRONMENT
 	
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
