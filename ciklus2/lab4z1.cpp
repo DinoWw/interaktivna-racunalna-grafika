@@ -1,8 +1,3 @@
-//*********************************************************************************
-//	Define convex polygon with clockwise vertex order and fill it in
-//	Right click to check if point is within polygon
-//*********************************************************************************
-
 
 #include <stdio.h>
 #include <GL/glut.h>
@@ -48,7 +43,7 @@ int main(int argc, char ** argv)
 	// count vertices and faces
 
 	// open obj file
-	FILE *file = fopen("objects/teddy.obj", "r");
+	FILE *file = fopen("../objects/teddy.obj", "r");
 	if(file == NULL) { 
 		printf("Failed to open file.\n");
 		exit(1);
@@ -201,23 +196,13 @@ int main(int argc, char ** argv)
 
 void drawBody() {
 	
-	// glBegin(GL_TRIANGLES);
-	// for(int f = 1; f < 3 * faceCount; f+=1) {
-	// 	// printf("Vertex %d: %f %f %f\n", f, faces[f][0], faces[f][1], faces[f][2]);
-	// 	glVertex3d(faces[f][0], faces[f][1], faces[f][2]);
-	// 	glVertex3d(faces[f-1][0], faces[f-1][1], faces[f-1][2]);
-	// }
-	// glEnd();
-
-	glBegin(GL_LINES);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_TRIANGLES);
 	for(int f = 0; f < 3 * faceCount; f+=3) {
 		// printf("Vertex %d: %f %f %f\n", f, faces[f][0], faces[f][1], faces[f][2]);
 		glVertex3d(faces[f][0], faces[f][1], faces[f][2]);
 		glVertex3d(faces[f+1][0], faces[f+1][1], faces[f+1][2]);
-		glVertex3d(faces[f+1][0], faces[f+1][1], faces[f+1][2]);
 		glVertex3d(faces[f+2][0], faces[f+2][1], faces[f+2][2]);
-		glVertex3d(faces[f+2][0], faces[f+2][1], faces[f+2][2]);
-		glVertex3d(faces[f][0], faces[f][1], faces[f][2]);
 	}
 	glEnd();
 
@@ -291,18 +276,9 @@ void myReshape(int w, int h)
 	glViewport(0, 0, width, height);	//  otvor u prozoru
 	
 	glMatrixMode(GL_PROJECTION);		//	matrica projekcije
-	glLoadIdentity();					//	jedinicna matrica
-	glFrustum(-1, 1, -1, 1, 8, 1000);
-	// gluPerspective(120.0f, ((GLdouble) w)/h, 1.f, 1000.f);
-	// glOrtho(0, width, 0, height, -1, 1); 	//	okomita projekcija
+	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);			//	matrica pogleda
 	glLoadIdentity();					//	jedinicna matrica
-	gluLookAt(
-		(GLdouble)0.f, (GLdouble)0.f, (GLdouble)10.f, 
-		(GLdouble)0.f, (GLdouble)0.f, (GLdouble)0.f, 
-		(GLdouble)0.f, (GLdouble)1.f, (GLdouble)0.f);
-	// glTranslatef(-( vmax[0]-vmin[0] ) / 2, -( vmax[1]-vmin[1] ) / 2, -( vmax[2]-vmin[2] ) / 2);
-	// glScalef( 1 / ( vmax[0]-vmin[0] ), 1 / ( vmax[1]-vmin[1] ), 1 / ( vmax[2]-vmin[2] ) );
 
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f); // boja pozadine
 	glClear(GL_COLOR_BUFFER_BIT);		//	brisanje pozadine
