@@ -7,6 +7,9 @@
 void coutVec4(const char* name, glm::vec4 vec) {
 	printf("%10s [ %14.4f, %14.4f, %14.4f, %14.4f ]\n", name, vec.x, vec.y, vec.z, vec[3]);
 }
+void coutVec3(const char* name, glm::vec3 vec) {
+	printf("%10s [ %14.4f, %14.4f, %14.4f ]\n", name, vec.x, vec.y, vec.z);
+}
 
 //*********************************************************************************
 //	Pokazivac na glavni prozor i pocetna velicina.
@@ -36,8 +39,10 @@ int vertCount = 0, faceCount = 0;
 
 GLdouble *verts;
 GLdouble **faces;
-GLdouble *A, *B, *C, *D;
 
+glm::vec3 O = {100, 0, 100};
+glm::vec3 G = {0, 0, 0};
+glm::vec3 Vup = {0, 1, 0};
 //*********************************************************************************
 //	Glavni program.
 //*********************************************************************************
@@ -115,6 +120,31 @@ int main(int argc, char ** argv)
 	// close obj file
 	fclose(file);
 
+	// load camera info
+	FILE *camF = fopen("camera.obj", "r");
+	if(camF == NULL) { 
+		printf("Failed to open file.\n");
+		exit(1);
+	}
+	// read lines
+	while( fgets(line, sizeof(line), camF) != NULL ) {
+		switch(line[0]){
+		case('o'):
+			sscanf(line, "o %f %f %f", &O.x, &O.y, &O.z );
+			break;
+		case('g'):
+			sscanf(line, "g %f %f %f", &G.x, &G.y, &G.z );
+			break;
+		case('u'):
+			sscanf(line, "g %f %f %f", &Vup.x, &Vup.y, &Vup.z );
+			break;
+		case('#'):
+		default:
+			break;
+		}
+	}
+	fclose(camF);
+
 	// testing
 	//printf("Vertices %f %f %f\n", faces[0][0], faces[0][1], faces[0][2]);
 	//printf("Vertices %f %f %f\n", faces[1][0], faces[1][1], faces[1][2]);
@@ -159,9 +189,6 @@ int main(int argc, char ** argv)
 
 
 
-glm::vec3 O = {100, 0, 100};
-glm::vec3 G = {0, 0, 0};
-glm::vec3 Vup = {0, 1, 0};
 void drawBody() {
 	
 	using glm::vec4;
@@ -331,5 +358,9 @@ void controlFunction(unsigned char theKey, int mouseX, int mouseY)
 
 	}
 	
+	coutVec3("O", O);
+	coutVec3("G", G);
+	printf("\n");
+
 	glutPostRedisplay();
 }
