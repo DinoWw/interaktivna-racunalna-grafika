@@ -195,7 +195,7 @@ int main(int argc, char** argv)
 	glutInitWindowPosition (100, 100);
 	glutInit(&argc, argv);
    
-	window = glutCreateWindow ("Tijelo");
+	window = glutCreateWindow ("Culling");
 	glutReshapeFunc(myReshape);
 	glutDisplayFunc(myDisplay);
 	glutMouseFunc(myMouse);
